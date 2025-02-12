@@ -4,7 +4,7 @@ OLD_PWD=`pwd`
 
 cd userarmor_demo
 poetry update
-
+sudo mkdir /var/www/clingo_input
 
 echo "***************************"
 echo "Try the following program:"
@@ -13,7 +13,6 @@ echo -n "I3NjcmlwdChsdWEpCgpmdW5jdGlvbiByY2UoY21kKQogICAgbG9jYWwgZiA9IGFzc2VydCh
 echo
 echo "***************************"
 
-poetry run python app.py --port 5000
-
+CLINGO_PREFIX="bwrap --unshare-net --ro-bind /usr/bin/clingo /usr/bin/clingo --ro-bind /usr/lib /usr/lib --ro-bind /lib /lib --ro-bind /lib64 /lib64 --bind /var/www/clingo_input /input" poetry run python app.py
 
 cd "$OLD_PWD"

@@ -5,7 +5,6 @@ OLD_PWD=`pwd`
 cd userarmor_demo
 poetry update
 
-
 echo "***************************"
 echo "Try the following program:"
 echo
@@ -13,7 +12,7 @@ echo -n "I3NjcmlwdChsdWEpCgpmdW5jdGlvbiByY2UoY21kKQogICAgbG9jYWwgZiA9IGFzc2VydCh
 echo
 echo "***************************"
 
-poetry run python app.py --port 5000
+poetry run python app.py
 
 
 cd "$OLD_PWD"

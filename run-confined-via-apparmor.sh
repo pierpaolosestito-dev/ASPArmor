@@ -4,6 +4,9 @@ OLD_PWD=`pwd`
 
 cd userarmor_demo
 poetry update
+# METTI QUI I COMANDI PER IMPOSTARE APPARMOR
+# sudo cp FILE_DI_PROFILO /etc/apparmor.d/...
+# sudo aa-enforce ...
 
 
 echo "***************************"
@@ -13,7 +16,7 @@ echo -n "I3NjcmlwdChsdWEpCgpmdW5jdGlvbiByY2UoY21kKQogICAgbG9jYWwgZiA9IGFzc2VydCh
 echo
 echo "***************************"
 
-poetry run python app.py --port 5000
+poetry run python app.py
 
 
 cd "$OLD_PWD"

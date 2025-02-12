@@ -4,6 +4,8 @@ OLD_PWD=`pwd`
 
 cd userarmor_demo
 poetry update
+# METTI QUI I COMANDI PER IMPOSTARE USERARMOR
+# COPIA DEI PROFILI, COMANDI USATI e via dicendo
 
 
 echo "***************************"
@@ -13,7 +15,7 @@ echo -n "I3NjcmlwdChsdWEpCgpmdW5jdGlvbiByY2UoY21kKQogICAgbG9jYWwgZiA9IGFzc2VydCh
 echo
 echo "***************************"
 
-poetry run python app.py --port 5000
+CLINGO_PREFIX="comando che metti prima di lanciare clingo" poetry run python app.py
 
 
 cd "$OLD_PWD"

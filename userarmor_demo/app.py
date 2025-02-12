@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
 import subprocess
+import os
+
+prefix = os.getenv("CLINGO_PREFIX", "")
 
 app = Flask(__name__)
 
 
 def run_clingo(program):
-    return subprocess.run(["clingo"], input=program, text=True, capture_output=True).stdout
+    return subprocess.run(["sh", "-c", f"{prefix} clingo"], input=program, text=True, capture_output=True).stdout
 
 
 @app.route('/', methods=['GET', 'POST'])
