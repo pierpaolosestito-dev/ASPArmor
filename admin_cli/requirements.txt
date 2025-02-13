@@ -1,0 +1,13 @@
+click==8.1.7
+markdown-it-py==3.0.0
+mdurl==0.1.2
+my_shared_library @ file:///home/pierpaolo-sestito/Scrivania/master_thesis/my_shared_library
+prompt_toolkit==3.0.48
+Pygments==2.18.0
+python-dotenv==1.0.1
+pyxattr==0.8.1
+rich==13.9.4
+shellingham==1.5.4
+typer==0.14.0
+typing_extensions==4.12.2
+wcwidth==0.2.13

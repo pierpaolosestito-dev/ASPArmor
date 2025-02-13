@@ -1,0 +1,35 @@
+profile pierpaolodue {
+#@+select:
+}
+
+profile pierpaolo-sestito {
+     #@+select: a,x,b
+     include <abstractions/base>
+     include <abstractions/bash>
+     /usr/bin/sleep ix,
+     /usr/bin/ci ix,
+     /usr/bin/forse.sh r,
+     /usr/bin/bash ix,
+     /usr/bin/blabla ix,
+     /usr/bin/ci ix,
+     /usr/bin/ci ix,
+}
+
+
+profile pierpaolotre {
+#@+select:
+}
+
+profile pierpaolo-sestito::reader {
+     #@+select: a,x
+     include <abstractions/base>
+     include <abstractions/bash>
+     /usr/bin/sleep ix,
+     /usr/bin/ci ix,
+     /usr/bin/bash ix,
+     /usr/bin/blabla ix,
+     /usr/bin/ci ix,
+     /usr/bin/ci ix,
+}
+
+
