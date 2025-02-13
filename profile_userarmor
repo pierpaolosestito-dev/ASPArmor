@@ -2,7 +2,7 @@
 
 /usr/bin/clingo {
     #include <abstractions/base>
-    /** rwmix,
+    /** rwmix,  #@removable{access_everything}
 
     #@selectable{alias=restricted, users=[USER]}
     ## Deny access to the entire filesystem except for necessary paths

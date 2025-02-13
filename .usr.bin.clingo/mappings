@@ -1,4 +1,6 @@
 profile USER {
+    #include <abstractions/base>
+
     # Deny access to the entire filesystem except for necessary paths
     deny / rwx,    
     /usr/lib/** rm,

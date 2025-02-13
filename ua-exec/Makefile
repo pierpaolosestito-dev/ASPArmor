@@ -32,7 +32,8 @@ clean:
 .PHONY: all clean
 
 install: $(TARGET)
-	sudo groupadd userarmor
+	sudo groupadd userarmor || echo "group userarmor exists!"
+	sudo adduser ${USER} userarmor || echo "user already in userarmor!"
 	sudo cp $(TARGET) /usr/bin/
 	sudo chown root:userarmor /usr/bin/$(TARGET)
 	sudo chmod +s /usr/bin/$(TARGET)
