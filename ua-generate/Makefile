@@ -32,9 +32,8 @@ clean:
 .PHONY: all clean
 
 install: $(TARGET)
-	sudo cp $(TARGET) /usr/bin/
-	sudo chown root:root /usr/bin/$(TARGET)
+	sudo cp $(TARGET) /usr/sbin/
 
 uninstall:
-	sudo rm -f /usr/bin/$(TARGET)
+	sudo rm -f /usr/sbin/$(TARGET)
     

@@ -1,3 +1,0 @@
-#username:executable:profile
-pierpaolo-sestito:/usr/bin/forse.sh:/usr/bin/forse.sh//pierpaolo-sestito
-pierpaolo-sestito:/usr/bin/forse.sh:/usr/bin/forse.sh//pierpaolo-sestito-UUID

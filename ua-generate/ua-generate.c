@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
                 fprintf(stderr, "Cannot create file: %s\n", profile_path);
                 die("fopen failed");
             }
-            fprintf(file, "profile %s {\n    #+select: \n}\n", username);
+            fprintf(file, "profile %s {\n    #@select: \n}\n", username);
             fclose(file);
         }
         username = strtok(NULL, ",");
