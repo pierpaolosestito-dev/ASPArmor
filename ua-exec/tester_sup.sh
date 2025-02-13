@@ -276,3 +276,25 @@ for i in {1..10}; do
 	TIME=$(/usr/bin/time -f "%e" ua-exec /usr/bin/bash_fullversion.sh)
 	echo -e "$LANGUAGE\t$RETE\t$ADMIN\t$SLEEP\t$i\t$TIME\t$POLICY"
 done
+
+
+Policy=bwrap
+SLEEP=0
+
+for i in {1..10}; do
+	TIME=$(/usr/bin/time -f "%e" bwrap --unshare-net --ro-bind /usr/bin /usr/bin --bind /var/log/confined_application /var/log/confined_application  /usr/bin/bash_fullversion.sh)
+	echo -e "$LANGUAGE\t$RETE\t$ADMIN\t$SLEEP\t$i\t$TIME\t$POLICY"
+done
+SLEEP=0.01
+
+for i in {1..10}; do
+	TIME=$(/usr/bin/time -f "%e" ua-exec /usr/bin/bash_fullversion.sh)
+	echo -e "$LANGUAGE\t$RETE\t$ADMIN\t$SLEEP\t$i\t$TIME\t$POLICY"
+done
+
+SLEEP=0.1
+for i in {1..10}; do
+	TIME=$(/usr/bin/time -f "%e" ua-exec /usr/bin/bash_fullversion.sh)
+	echo -e "$LANGUAGE\t$RETE\t$ADMIN\t$SLEEP\t$i\t$TIME\t$POLICY"
+done
+
