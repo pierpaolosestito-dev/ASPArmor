@@ -1,0 +1,17 @@
+[tool.poetry]
+name = my_shared_library
+version = 1.0.0
+description = Libreria condivisa tra le CLI
+authors = [Tuo Nome pierpaolo.sestito@outlook.it]
+license = MIT
+packages = [{ include = my_shared_library }]
+
+[tool.poetry.dependencies]
+python = ^3.7  # Puoi modificarlo in base alla compatibilità della tua libreria
+
+[build-system]
+requires = [poetry-core]
+build-backend = poetry.core.masonry.api
+
+
+
