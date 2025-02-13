@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+
 import getpass
 import os
 import re
+import subprocess
 import sys
 from collections import defaultdict
 
@@ -107,6 +110,8 @@ def enforce(binary, profile_file, profile_dir_relative_path, profile):
 
     with open(f"{profile_dir}/mappings", 'w') as pf:
         pf.write("\n".join(mapping_content))
+
+    subprocess.run(["sudo", "aa-enforce", profile_file])
 
 
 def main():
