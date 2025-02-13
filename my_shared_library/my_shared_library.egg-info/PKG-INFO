@@ -1,7 +1,9 @@
-Metadata-Version: 2.1
-Name: my-shared-library
+Metadata-Version: 2.2
+Name: my_shared_library
 Version: 1.0.0
 Summary: Libreria condivisa tra le CLI
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 License-File: LICENSE
+Dynamic: classifier
+Dynamic: summary

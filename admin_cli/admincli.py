@@ -493,7 +493,13 @@ def generate_structure(
             "--directory",
             help="If you create your directory x containing the structure with a file for each user with the name of the user + mappings file, you can specify the directory with --directory x",
             show_default=False
-        )
+        ),subprofiles: str = typer.Option(
+            None,
+            "--subprofiles",
+
+        help="Specify one or more subprofiles, e.g., --subprofiles element1,element2,element3.",
+        show_default=False
+            ),
 ):
 
         print(APPARMOR_PATH)
@@ -536,6 +542,13 @@ def generate_structure(
         else:
             c.print(INFO_MESSAGE(f"{mappings_path} Already exists."))
 
+        if subprofiles:
+            subprofiles_list = subprofiles.split(',')
+            subprofiles_list = [element.strip() for element in subprofiles_list]
+            _subprofiles = subprofiles_list
+            create_subprofiles_in_the_structure(_subprofiles, structure_name)
+            c.print(SUCCESS_MESSAGE(f"Structure created."))
+            return
         users_without_subprofile = users_without_files(users_l,f"{APPARMOR_PATH}{structure_name}")
         if len(users_without_subprofile) == 0:
             c.print(SUCCESS_MESSAGE(f"Every user in the system has a profile for {generic_apparmor_profile}"))
@@ -1017,17 +1030,6 @@ def refresh_database():
         print(info_DAO.read_all())
         c.print(SUCCESS_MESSAGE("Database initialized."))
 
-    '''db_connection = DatabaseConnection()
-    infoDAO = InfoDAO(db_connection.get_cursor())
-    #Eliminiamo tutti in una prima fase
-    infoDAO.delete_all()
-    users = users_list()
-    filtered_infos,last_row = template_method_to_read_kernel_and_process(users,-1)
-    for filtered in filtered_infos:
-        infoDAO.create(filtered)
-    print(infoDAO.read_all())'''
-    #Inserire KContent
-
 
 #TODO: Da rivedere
 @app.command(help="Process a generic AppArmor profile, including managing subprofiles and generating mappings. Optional unrestrict mode for flexible alias handling.")
@@ -1156,37 +1158,6 @@ def process(generic_apparmor_profile,
     '''
 
 
-
-
-def test(generic_apparmor_profile):
-
-    executable_path, executable_name = extract_executablename_and_path_linked_to_apparmor_profile_from_generic_profile(
-        generic_apparmor_profile)
-
-    print(executable_path,executable_name)
-    rlimit_infos = check_rlimit_rules_and_mapout(executable_path,generic_apparmor_profile)
-    #print(rlimit_infos)
-    for rlimit in rlimit_infos:
-        #CPU -t , FILED -n , MEMORY -v (ulimit flags)
-        '''Limitazione di ulimit, non possiamo usare >1 flag inline, per esempio per applicare 3 limitazioni insieme:
-        ulimit -t 100
-        ulimit -v 120
-        ulimit -n 150
-        exec program
-        
-        ->Inseriamo tanti record diversi nella tabella RLIMITS legato ad un determinato file e anche captare il profilo che si verrà ad attivare
-        LATO ESECUZIONE SCRIPT CON LIMITAZIONI: Se è nella tabella il profilo che sta cercando di eseguire avremo modo di attivare le limitazioni'''
-        if rlimit[0] == 'CPU':
-
-            rrecord = RlimitRecord(generic_apparmor_profile,"-t",rlimit[1])
-            print(rrecord)
-        if rlimit[0] == 'MEMORY':
-
-            rrecord = RlimitRecord(generic_apparmor_profile, "-v", rlimit[1])
-            print(rrecord)
-        if rlimit[0] == 'FILED':
-            rrecord = RlimitRecord(generic_apparmor_profile,"-n",rlimit[1])
-            print(rrecord)
 
 @app.command(help="Automate the generation of an AppArmor profile using aa-genprof. Includes optional resource limitations like memory, CPU, and file descriptors.")
 def secure_genprof(
