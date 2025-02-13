@@ -6,6 +6,9 @@ source clean.sh
 
 sudo apt install apparmor-utils
 
+sudo chmod o-x /usr/bin/aa-exec
+cd ua-exec; make install; cd ..
+
 sudo cp profile_userarmor /etc/apparmor.d/usr.bin.clingo
 sudo cp -r .usr.bin.clingo /etc/apparmor.d/
 
@@ -22,5 +25,5 @@ sudo aa-enforce /etc/apparmor.d/usr.bin.clingo  # da eliminare (deve farlo il co
 source setup_env.sh
 
 #CLINGO_PREFIX="$ROOT_PATH/usercli launch" poetry run python app.py
-CLINGO_PREFIX="sudo aa-exec -p /usr/bin/clingo//$USER " poetry run python app.py   # da eliminare (deve farlo con il prefisso di sopra)
+CLINGO_PREFIX="ua-exec " poetry run python app.py   # da eliminare (deve farlo con il prefisso di sopra)
 
