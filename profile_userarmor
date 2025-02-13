@@ -4,7 +4,7 @@
     #include <abstractions/base>
     /** rwmix,  #@removable{access_everything}
 
-    #@selectable{alias=restricted, users=[USER]}
+    #@selectable{alias=restricted}
     ## Deny access to the entire filesystem except for necessary paths
     #deny / rwx,    
     #/usr/lib/** rm,
@@ -22,5 +22,5 @@
     #deny capability setgid,
     #@end
 
-    include if exists <.usr.bin.clingo/mappings>
+    include if exists <.usr.bin.clingo/mappings>   # REMOVE (it must be produced by ua-generate)
 }
