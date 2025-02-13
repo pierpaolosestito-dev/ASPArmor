@@ -1,5 +1,0 @@
-profile pierpaolo-sestito {
-    #@+select: a,b,c
-    ##@+select: a,b,c
-    #Commento
-}

@@ -1,2 +1,0 @@
-pierpaolo-sestito::/usr/bin/forse.sh//pierpaolo-sestito::/etc/apparmor.d/usr.bin.forse.sh
-pierpaolo-sestito::/usr/bin/forse.sh::/etc/apparmor.d/usr.bin.forse.sh
