@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ua-enforce-py"
+version = "0.1.0"
+description = ""
+authors = ["malvi <mario.alviano@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+ue-enforce = "ua_enforce_py.main:main"
