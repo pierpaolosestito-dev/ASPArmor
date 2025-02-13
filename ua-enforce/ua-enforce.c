@@ -487,12 +487,26 @@ void append_file(const char *first_filename, const char *second_filename) {
 }
    
 // Main
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <string.h>
+
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "Uso: %s <file_input>\n", argv[0]);
         return EXIT_FAILURE;
     }
-
+    
+    char *transformed_path = extract_and_replace_path(argv[1]);
+    if (transformed_path) {
+        printf("Path trasformato: %s\n", transformed_path);
+    }
 
     // Estrai #@selectable
     SelectableList selectable_list = find_selectable_entries(argv[1]);
@@ -502,64 +516,78 @@ int main(int argc, char *argv[]) {
         printf("Alias: %s\nRegola: %s\n", selectable_list.entries[i].alias, selectable_list.entries[i].rule);
     }
 
-    // Estrai #@select:
-    SelectList select_list = extract_select_values("../.usr.bin.clingo/USER");
-
-    printf("\n--- Valori trovati in #@select: ---\n");
-    for (size_t i = 0; i < select_list.count; i++) {
-        printf("%s\n", select_list.values[i]);
+    // INIZIO CICLO
+    char dir_path[256];
+    snprintf(dir_path, sizeof(dir_path), "/etc/apparmor.d/%s/", transformed_path);
+    DIR *dir = opendir(dir_path);
+    if (!dir) {
+        perror("Errore nell'apertura della directory");
+        return EXIT_FAILURE;
     }
-
-    // Confronta gli alias trovati
-  size_t match_count = 0;
-char **matched_rules = check_alias_in_selectable(&select_list, &selectable_list, &match_count);
-
-if (matched_rules) {
-    printf("Numero di regole da iniettare: %lu\n", match_count);
-    inject_rules_into_file("../.usr.bin.clingo/USER", matched_rules, match_count);
-
-    for (size_t i = 0; i < match_count; i++) {
-        free(matched_rules[i]);
-    }
-    free(matched_rules);
-
-}
-
-
-
-    // Libera la memoria allocata
-    free_select_list(&select_list);
-    free_selectable_list(&selectable_list);
-
-  // Sostituiscilo con il nome del file corretto
-    // Filtra le righe dal file di input
-LineList result = read_filtered_lines(argv[1]);
-
-printf("Righe filtrate:\n");
-for (size_t i = 0; i < result.size; i++) {
-    printf("%s\n", result.lines[i]);
-}
-
-// Usa le righe filtrate come regole da iniettare
-if (result.size > 0) {
-    inject_rules_into_file("../.usr.bin.clingo/USER", result.lines, result.size);
-}
-
-// Libera la memoria
-free_list(&result);
-
     
-   append_file("../.usr.bin.clingo/USER", "../.usr.bin.clingo/mappings");
-   char *transformed_path = extract_and_replace_path(argv[1]);
-    if (transformed_path) {
-        printf("Path trasformato: %s\n", transformed_path);
-    }
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        if (strcmp(entry->d_name, "mappings") == 0 || strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+            continue;
+        }
+        
+        char user_path[256];
+        snprintf(user_path, sizeof(user_path), "%s%s", dir_path, entry->d_name);
 
+        // Estrai #@select:
+        SelectList select_list = extract_select_values(user_path);
+
+        printf("\n--- Valori trovati in #@select (%s): ---\n", entry->d_name);
+        for (size_t i = 0; i < select_list.count; i++) {
+            printf("%s\n", select_list.values[i]);
+        }
+
+        // Confronta gli alias trovati
+        size_t match_count = 0;
+        char **matched_rules = check_alias_in_selectable(&select_list, &selectable_list, &match_count);
+
+        if (matched_rules) {
+            printf("Numero di regole da iniettare: %lu\n", match_count);
+            inject_rules_into_file(user_path, matched_rules, match_count);
+
+            for (size_t i = 0; i < match_count; i++) {
+                free(matched_rules[i]);
+            }
+            free(matched_rules);
+        }
+
+        // Filtra le righe dal file di input
+        LineList result = read_filtered_lines(argv[1]);
+
+        printf("Righe filtrate:\n");
+        for (size_t i = 0; i < result.size; i++) {
+            printf("%s\n", result.lines[i]);
+        }
+
+        // Usa le righe filtrate come regole da iniettare
+        if (result.size > 0) {
+            inject_rules_into_file(user_path, result.lines, result.size);
+        }
+
+        // Libera la memoria
+        free_list(&result);
+
+        // Append al file mappings
+        char mappings_path[256];
+        snprintf(mappings_path, sizeof(mappings_path), "%s/mappings", dir_path);
+        append_file(user_path, mappings_path);
+
+        // Libera la memoria allocata
+        free_select_list(&select_list);
+    }
+    closedir(dir);
+
+    free_selectable_list(&selectable_list);
+  
+    // Fine ciclo 
     check_and_add_include(argv[1], transformed_path);
-   run_apparmor_parser(argv[1]);
+    run_apparmor_parser(argv[1]);
+    
     return EXIT_SUCCESS;
 }
-
-
-
 
