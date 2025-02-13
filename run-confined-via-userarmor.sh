@@ -13,9 +13,11 @@ cd ua-enforce-py; make install; cd ..
 sudo cp profile_userarmor /etc/apparmor.d/usr.bin.clingo
 
 sudo ua-generate /usr/bin/clingo $USER 
-(head -n1 /etc/apparmor.d/.usr.bin.clingo/$USER; cat .usr.bin.clingo/USER; tail -n1 /etc/apparmor.d/.usr.bin.clingo/$USER) > /tmp/userarmor
-sudo cp /tmp/userarmor /etc/apparmor.d/.usr.bin.clingo/$USER
-rm -f /tmp/userarmor
+(head -n1 /etc/apparmor.d/.usr.bin.clingo/$USER; 
+ echo "    #@select: restricted";
+ echo "    #@remove: access_everything";
+ tail -n1 /etc/apparmor.d/.usr.bin.clingo/$USER
+) | sudo tee /etc/apparmor.d/.usr.bin.clingo/$USER
 
 sudo ua-enforce /usr/bin/clingo
 
