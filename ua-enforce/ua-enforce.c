@@ -492,10 +492,7 @@ void append_file(const char *first_filename, const char *second_filename) {
 #include <dirent.h>
 #include <string.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <string.h>
+
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -531,8 +528,8 @@ int main(int argc, char *argv[]) {
             continue;
         }
         
-        char user_path[256];
-        snprintf(user_path, sizeof(user_path), "%s%s", dir_path, entry->d_name);
+        char user_path[512];
+        snprintf(user_path, sizeof(user_path), "%s/%s", dir_path, entry->d_name);
 
         // Estrai #@select:
         SelectList select_list = extract_select_values(user_path);
@@ -573,7 +570,7 @@ int main(int argc, char *argv[]) {
         free_list(&result);
 
         // Append al file mappings
-        char mappings_path[256];
+        char mappings_path[512];
         snprintf(mappings_path, sizeof(mappings_path), "%s/mappings", dir_path);
         append_file(user_path, mappings_path);
 
@@ -590,4 +587,3 @@ int main(int argc, char *argv[]) {
     
     return EXIT_SUCCESS;
 }
-
