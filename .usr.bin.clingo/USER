@@ -1,3 +1,4 @@
 profile USER {
     #@+select: restricted
+    #@+remove: access_everything
 }
