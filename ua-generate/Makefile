@@ -5,10 +5,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Wpedantic -O2 -g
 
 # Target executable
-TARGET = ua-exec
+TARGET = ua-generate
 
 # Source files
-SRC = ua-exec.c
+SRC = ua-generate.c
 
 # Object files (automatically generated from SRC)
 OBJ = $(SRC:.c=.o)
@@ -32,12 +32,9 @@ clean:
 .PHONY: all clean
 
 install: $(TARGET)
-	sudo groupadd userarmor
 	sudo cp $(TARGET) /usr/bin/
-	sudo chown root:userarmor /usr/bin/$(TARGET)
-	sudo chmod +s /usr/bin/$(TARGET)
+	sudo chown root:root /usr/bin/$(TARGET)
 
 uninstall:
-	sudo groupdel userarmor
 	sudo rm -f /usr/bin/$(TARGET)
     
