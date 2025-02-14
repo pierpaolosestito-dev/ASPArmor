@@ -77,12 +77,12 @@ This script runs Clingo in a **Bubblewrap sandbox**, ensuring the web app runs i
 ---
 
 ## **Summary: Choosing the Right Execution Mode**
-| Execution Mode | RCE Protection | SSH Users Restricted? | Requires Sandbox? |
+| Execution Mode | RCE Protection | SSH Users Unrestricted? | Fast (no Sandbox)? |
 |---------------|---------------|------------------|----------------|
-| **Unconfined (`run-unconfined.sh`)** | ❌ No | ❌ No | ❌ No |
-| **AppArmor (`run-confined-via-apparmor.sh`)** | ✅ Yes | ✅ Yes | ❌ No |
-| **UserArmor (`run-confined-via-userarmor.sh`)** | ✅ Yes | ❌ No | ❌ No |
-| **Bubblewrap (`run-sand-boxed-via-bwrap.sh`)** | ✅ Yes | ❌ No | ✅ Yes |
+| **Unconfined (`run-unconfined.sh`)** | ❌ No | ✅ Yes | ✅ Yes |
+| **AppArmor (`run-confined-via-apparmor.sh`)** | ✅ Yes | ❌ No | ✅ Yes |
+| **UserArmor (`run-confined-via-userarmor.sh`)** | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Bubblewrap (`run-sand-boxed-via-bwrap.sh`)** | ✅ Yes | ✅ Yes | ❌ No |
 
 ---
 
