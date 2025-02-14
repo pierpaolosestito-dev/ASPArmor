@@ -1,0 +1,24 @@
+# Fake configuration file for demo purposes
+
+[general]
+app_name = FakeApp
+version = 1.0.0
+debug = true
+
+[database]
+host = localhost
+port = 5432
+username = fakeuser
+password = fakepassword
+database = fakedb
+
+[logging]
+log_level = INFO
+log_file = /var/log/fakeapp.log
+max_log_size = 10MB
+
+[security]
+enable_auth = true
+allowed_ips = 192.168.1.1, 192.168.1.2, 10.0.0.0/24
+secret_key = supersecretkey123
+

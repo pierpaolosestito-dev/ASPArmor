@@ -7,7 +7,6 @@ import subprocess
 import sys
 from collections import defaultdict
 
-pattern_has_include = re.compile(r"^\s*include\s+if\s+exists\s+<\s*.usr.bin.clingo/mappings\s*>\s*$")
 pattern_selectable_line = re.compile(r"^\s*#@selectable\s*\{\s*(?P<alias>[A-Za-z0-9_-]+)\s*}\s*(?P<content>\S.*)$")
 pattern_removable_line = re.compile(r"^(?P<content>.*)\s*#@removable\s*\{\s*(?P<alias>[A-Za-z0-9_-]+)\s*}\s*$")
 pattern_selectable_block_begin = re.compile(r"^\s*#@selectable\s*\{\s*(?P<alias>[A-Za-z0-9_-]+)\s*}\s*$")
@@ -18,6 +17,7 @@ pattern_remove = re.compile(r"^\s*#@remove\s*:\s*(?P<alias>[A-Za-z0-9_-]+)?(?:\s
 
 
 def enforce(binary, profile_file, profile_dir_relative_path, profile):
+    pattern_has_include = re.compile(r"^\s*include\s+if\s+exists\s+<\s*" + profile_dir_relative_path + r"/mappings\s*>\s*$")
     pattern_is_starting_the_profile = re.compile(r"^.*(profile\s+)?" + binary + r"\s*\{\s*(?P<content>.*)$", re.DOTALL)
 
     has_include = False

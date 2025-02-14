@@ -1,0 +1,12 @@
+#include <tunables/global>
+/usr/bin/my_confined_app {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+    
+    /usr/bin/my_confined_app r,
+    /etc/my_confined_app.conf r,
+    /usr/bin/cat ix, 
+    
+    #@selectable{adm}  capability sys_admin,
+    #@selectable{net}  network inet,   
+}

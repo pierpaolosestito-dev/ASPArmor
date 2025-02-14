@@ -1,0 +1,14 @@
+#include <tunables/global>
+/usr/bin/my_confined_app {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+    
+    /usr/bin/my_confined_app r,
+    /etc/my_confined_app.conf r,
+    /usr/bin/cat ix, 
+    
+    capability sys_admin,
+    network inet,   
+
+    /var/log/my_confined_app/user1.log rw,
+    /var/log/my_confined_app/user2.log rw,
